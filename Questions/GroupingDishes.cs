@@ -41,13 +41,36 @@ namespace Questions
                             dishesWithIngredient.Add(d);
                         }
                     }
-                    ingredientsDict.Add(i, dishesWithIngredient);
+
+                    if(dishesWithIngredient.Count >= 2)
+                        ingredientsDict.Add(i, dishesWithIngredient);
                 }
             }
 
             // Convert ingredientsDict into string[][]
-            return new string[2][];
+            var keys = ingredientsDict.Keys.ToList();
+            var l = new List<List<string>>();
+            foreach (var k in keys)
+            {
+                var t = new List<string>();
+
+                foreach (var i in ingredientsDict[k])
+                {
+                    t.Add(i);
+                }
+
+                t.Sort();
+                t.Insert(0,k);
+                l.Add(t);
+            }
+
+            return l
+                .Select(a=>a.ToArray())
+                .OrderBy(i=>i[0])
+                .ToArray();
         }
     }
 }
+
+
 
