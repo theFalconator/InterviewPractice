@@ -19,8 +19,24 @@ namespace Questions
     {
         public ListNode Add(ListNode l1, ListNode l2)
         {
-            var listnode = Reverse(l1);
-            return new ListNode(1);
+            int carry = 0;
+            ListNode prev = new ListNode(0);
+            ListNode head = prev;
+            while (l1 != null || l2 != null || carry != 0)
+            {
+                var cursor = new ListNode(0);
+                var sum = (l1?.val ?? 0) + (l2?.val ?? 0) + carry;
+                
+                cursor.val = sum % 10;
+                carry = sum / 10;
+                prev.next = cursor;
+                prev = cursor;
+
+                l1 = (l1 != null) ? l1.next : l1;
+                l2 = (l2 != null) ? l2.next : l2;
+            }
+
+            return head.next;
         }
 
         public ListNode Reverse(ListNode l)
