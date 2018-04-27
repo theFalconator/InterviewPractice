@@ -20,11 +20,25 @@ namespace Questions
 
             var maxArea = 0;
 
-            for (var i = 0; i < height.Length; i++)
+            var left = 0;
+            var right = height.Length-1;
+
+
+            while (left < right) // indexes not wall height
             {
-                for (var j = i + 1; j < height.Length; j++)
+                // shorter wall will dictate max height
+                // width is always (right - left) to stay positive
+                maxArea = Math.Max(maxArea, Math.Min(height[left], height[right]) * (right - left));
+
+                if (height[left] < height[right])
                 {
-                    maxArea = Math.Max(maxArea, Math.Min(height[i], height[j]) * (j - i));
+                    // move left wall in one
+                    left++;
+                }
+                else
+                {
+                    // otherwise move right wall in one
+                    right--;
                 }
             }
 
